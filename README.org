@@ -2,6 +2,16 @@ Config pour initialiser la yubikey neo sur le laptop
 
 * gpg
 
+* ssl / ssh
+
+openssl req -new -x509 -key ssh-ja-ca-key.pem -out ssh-ja-ca-crt.pem
+yubico-piv-tool -k $pivkey -a import-certificate -s 9c < ssh-ja-ca-crt.pem
+
+** nginx
+
+scp ssh-ja-ca-crt.pem nginxsrv:
+sudo mv /home/ja/ssh-ja-ca-crt.pem clients.crt /data/certs/data/clients/yubi/clients.crt
+
 * pam-u2f
 
 https://developers.yubico.com/pam-u2f/
