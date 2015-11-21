@@ -1,1 +1,15 @@
 Config pour initialiser la yubikey neo sur le laptop
+
+* gpg
+
+* pam-u2f
+
+https://developers.yubico.com/pam-u2f/
+
+libpam-u2f
+
+create /etc/u2f_mappings ou ~/.config/Yubico/u2f_keys puis
+
+pamu2fcfg -uja >> ~/.config/Yubico/u2f_keys
+
+auth sufficient pam_u2f.so
