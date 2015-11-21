@@ -1,0 +1,1 @@
+Config pour initialiser la yubikey neo sur le laptop
