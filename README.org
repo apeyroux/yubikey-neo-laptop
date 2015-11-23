@@ -2,24 +2,40 @@ Config pour initialiser la yubikey neo sur le laptop
 
 * gpg
 
+** Liens
+
+[[http://spin.atomicobject.com/2014/02/09/gnupg-openpgp-smartcard/][Using an OpenPGP Smartcard with GnuPG]]
+[[https://developers.yubico.com/ykneo-openpgp/ResetApplet.html][OpenPGP Reset Applet]]
+
 * ssl / ssh
 
-openssl req -new -x509 -key ssh-ja-ca-key.pem -out ssh-ja-ca-crt.pem
-yubico-piv-tool -k $pivkey -a import-certificate -s 9c < ssh-ja-ca-crt.pem
+** Liens
+
+ [[https://developers.yubico.com/yubico-piv-tool/SSH_with_PIV_and_PKCS11.html][Using PIV for SSH through PKCS11]]
+ [[http://blog.josefsson.org/2015/06/16/ssh-host-certificates-with-yubikey-neo/][SSH Host Certificates with YubiKey NEO]]
+
+ #+BEGIN_SRC sh
+ openssl req -new -x509 -key ssh-ja-ca-key.pem -out ssh-ja-ca-crt.pem
+ yubico-piv-tool -k $pivkey -a import-certificate -s 9c < ssh-ja-ca-crt.pem
+ #+END_SRC
 
 ** nginx
 
-scp ssh-ja-ca-crt.pem nginxsrv:
-sudo mv /home/ja/ssh-ja-ca-crt.pem clients.crt /data/certs/data/clients/yubi/clients.crt
+ #+BEGIN_SRC sh
+ scp ssh-ja-ca-crt.pem nginxsrv:
+ sudo mv /home/ja/ssh-ja-ca-crt.pem clients.crt /data/certs/data/clients/yubi/clients.crt
+ #+END_SRC
 
 * pam-u2f
 
 https://developers.yubico.com/pam-u2f/
 
-libpam-u2f
+#+BEGIN_SRC sh
+apt-get install libpam-u2f
+#+END_SRC
 
+#+BEGIN_SRC sh
 create /etc/u2f_mappings ou ~/.config/Yubico/u2f_keys puis
-
 pamu2fcfg -uja >> ~/.config/Yubico/u2f_keys
-
 auth sufficient pam_u2f.so
+#+END_SRC
